@@ -1,5 +1,4 @@
 const computerPlay = () => {
-	// Take random number between 1 and 100, and round it off:
 	let randomNumber = (Math.random() * 100).toFixed();
 
 	// On division by 3, a number can have one of 3 remainders - either 0, 1, or 2.
@@ -20,32 +19,30 @@ const computerPlay = () => {
 
 
 function playRound (playerSelection, computerSelection) {
-	// Make player's selection case-insensitive first:
 	playerSelection ? playerSelection = playerSelection.toLowerCase() : '';
 
-	// Check if it's a draw first:
 	if (playerSelection === computerSelection) {
-		return drawResult;
+		return DRAW;
 	}
-	// By checking above, we've eliminated the possibilities RR, PP, and SS.
+	// By checking if it's a draw above, we've eliminated the possibilities RR, PP, and SS.
 	// Check the remaining possibilities now:
 	else {
 		let finalResult;
 		switch (playerSelection) {
 			case "rock":
-				computerSelection === "paper" ? finalResult = rockVsPaperResult : finalResult = rockVsScissorsResult;
-				finalResult === rockVsPaperResult ? computerScore++ : playerScore++;
+				computerSelection === "paper" ? finalResult = RVP_LOSE : finalResult = RVS_WIN;
+				finalResult === RVP_LOSE ? computerScore++ : playerScore++;
 				break;
 			case "paper":
-				computerSelection === "rock" ? finalResult = paperVsRockResult : finalResult = paperVsScissorsResult;
-				finalResult === paperVsRockResult ? playerScore++ : computerScore++;
+				computerSelection === "rock" ? finalResult = PVR_WIN : finalResult = PVS_LOSE;
+				finalResult === PVR_WIN ? playerScore++ : computerScore++;
 				break;
 			case "scissors":
-				computerSelection === "rock" ? finalResult = scissorsVsRockResult : finalResult = scissorsVsPaperResult;
-				finalResult === scissorsVsRockResult ? computerScore++ : playerScore++;
+				computerSelection === "rock" ? finalResult = SVR_LOSE : finalResult = SVP_WIN;
+				finalResult === SVR_LOSE ? computerScore++ : playerScore++;
 				break;
 			default:
-				return unrecognizedSelection;
+				return INCORRECT_STRING_ENTERED;
 		}
 		return finalResult;
 	}
@@ -88,14 +85,14 @@ let computerScore = 0;
 
 
 // Messages for possible results:
-const unrecognizedSelection = "Sorry! We do not recognize the object you entered. Please enter either 'rock', 'paper', or 'scissors'.";
-const drawResult = "It's an even fight - neither won.";
-const rockVsPaperResult = "Tough luck, you lose - paper eats rock :(";
-const rockVsScissorsResult = "Yay, you win - rock crushes scissors!";
-const paperVsRockResult = "Yay, you win - paper eats rock!";
-const paperVsScissorsResult = "Tough luck, you lose - scissors cut paper :(";
-const scissorsVsRockResult = "Tough luck, you lose - rock crushes scissors :(";
-const scissorsVsPaperResult = "Yay, you win - scissors cut paper!";
+const INCORRECT_STRING_ENTERED = "Sorry! We do not recognize the object you entered. Please enter either 'rock', 'paper', or 'scissors'.";
+const DRAW = "It's an even fight - neither won.";
+const RVP_LOSE = "Tough luck, you lose - paper eats rock :(";
+const RVS_WIN = "Yay, you win - rock crushes scissors!";
+const PVR_WIN = "Yay, you win - paper eats rock!";
+const PVS_LOSE = "Tough luck, you lose - scissors cut paper :(";
+const SVR_LOSE = "Tough luck, you lose - rock crushes scissors :(";
+const SVP_WIN = "Yay, you win - scissors cut paper!";
 
 
 // Play a game:
