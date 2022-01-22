@@ -99,4 +99,5 @@ const scissorsVsPaperResult = "Yay, you win - scissors cut paper!";
 
 
 // Play a game:
+alert("Press (ctrl+shift+i) to open your console and start playing!");
 game();
