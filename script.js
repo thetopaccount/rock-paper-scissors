@@ -1,5 +1,7 @@
 const computerPlay = () => {
-	let randomNumber = (Math.random() * 100).toFixed();
+	let randomNumber = parseInt((Math.random() * 100).toFixed());
+	// Using parseInt() here since toFixed() returns a string, 
+	// and it's better to convert that to an integer before performing any calculations with it.
 
 	// On division by 3, a number can have one of 3 remainders - either 0, 1, or 2.
 	// Computer's answer will thus vary depending on what the remainder will be.
@@ -22,7 +24,7 @@ function playRound (playerSelection, computerSelection) {
 	playerSelection ? playerSelection = playerSelection.toLowerCase() : '';
 
 	if (playerSelection === computerSelection) {
-		return DRAW;
+		return ROUND_DRAW;
 	}
 	// By checking if it's a draw above, we've eliminated the possibilities RR, PP, and SS.
 	// Check the remaining possibilities now:
@@ -86,7 +88,7 @@ let computerScore = 0;
 
 // Messages for possible results:
 const INCORRECT_STRING_ENTERED = "Sorry! We do not recognize the object you entered. Please enter either 'rock', 'paper', or 'scissors'.";
-const DRAW = "It's an even fight - neither won.";
+const ROUND_DRAW = "It's an even fight - neither won.";
 const RVP_LOSE = "Tough luck, you lose - paper eats rock :(";
 const RVS_WIN = "Yay, you win - rock crushes scissors!";
 const PVR_WIN = "Yay, you win - paper eats rock!";
