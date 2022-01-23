@@ -21,8 +21,6 @@ const computerPlay = () => {
 
 
 function playRound (playerSelection, computerSelection) {
-	playerSelection ? playerSelection = playerSelection.toLowerCase() : '';
-
 	if (playerSelection === computerSelection) {
 		return ROUND_DRAW;
 	}
@@ -32,14 +30,17 @@ function playRound (playerSelection, computerSelection) {
 		let finalResult;
 		switch (playerSelection) {
 			case "rock":
+				// Possibilities: RP or RS
 				computerSelection === "paper" ? finalResult = RVP_LOSE : finalResult = RVS_WIN;
 				finalResult === RVP_LOSE ? computerScore++ : playerScore++;
 				break;
 			case "paper":
+				// Possibilities: PR or PS
 				computerSelection === "rock" ? finalResult = PVR_WIN : finalResult = PVS_LOSE;
 				finalResult === PVR_WIN ? playerScore++ : computerScore++;
 				break;
 			case "scissors":
+				// Possibilities: SR or SP
 				computerSelection === "rock" ? finalResult = SVR_LOSE : finalResult = SVP_WIN;
 				finalResult === SVR_LOSE ? computerScore++ : playerScore++;
 				break;
@@ -61,7 +62,7 @@ function game() {
 	console.clear();
 
 	while (!isGameWon) {
-		playerSelection = prompt("What's your weapon of choice? (Rock/Paper/Scissors)");
+		playerSelection = prompt("What's your weapon of choice? (Rock/Paper/Scissors)").toLowerCase();
 		computerSelection = computerPlay();
 
 		console.group(`Round ${currentRound}`);
