@@ -1,7 +1,5 @@
 const computerPlay = () => {
-	let randomNumber = parseInt((Math.random() * 100).toFixed());
-	// Using parseInt() here since toFixed() returns a string, 
-	// and it's better to convert that to an integer before performing any calculations with it.
+	let randomNumber = Math.floor((Math.random() * 100));
 
 	// On division by 3, a number can have one of 3 remainders - either 0, 1, or 2.
 	// Computer's answer will thus vary depending on what the remainder will be.
@@ -31,18 +29,36 @@ function playRound (playerSelection, computerSelection) {
 		switch (playerSelection) {
 			case "rock":
 				// Possibilities: RP or RS
-				computerSelection === "paper" ? finalResult = RVP_LOSE : finalResult = RVS_WIN;
-				finalResult === RVP_LOSE ? computerScore++ : playerScore++;
+				if (computerSelection === "paper") {
+					finalResult = RVP_LOSE;
+					computerScore++;
+				}
+				else {
+					finalResult = RVS_WIN;
+					playerScore++;
+				}
 				break;
 			case "paper":
 				// Possibilities: PR or PS
-				computerSelection === "rock" ? finalResult = PVR_WIN : finalResult = PVS_LOSE;
-				finalResult === PVR_WIN ? playerScore++ : computerScore++;
+				if (computerSelection === "rock") {
+					finalResult = PVR_WIN;
+					playerScore++;
+				}
+				else {
+					finalResult = PVS_LOSE;
+					computerScore++;
+				}
 				break;
 			case "scissors":
 				// Possibilities: SR or SP
-				computerSelection === "rock" ? finalResult = SVR_LOSE : finalResult = SVP_WIN;
-				finalResult === SVR_LOSE ? computerScore++ : playerScore++;
+				if (computerSelection === "rock") {
+					finalResult = SVR_LOSE;
+					computerScore++;
+				}
+				else {
+					finalResult = SVP_WIN;
+					playerScore++;
+				}
 				break;
 			default:
 				return INCORRECT_STRING_ENTERED;
@@ -62,7 +78,7 @@ function game() {
 	console.clear();
 
 	while (!isGameWon) {
-		playerSelection = prompt("What's your weapon of choice? (Rock/Paper/Scissors)").toLowerCase();
+		playerSelection = prompt(PROMPT_MESSAGE).toLowerCase();
 		computerSelection = computerPlay();
 
 		console.group(`Round ${currentRound}`);
@@ -71,14 +87,11 @@ function game() {
 		console.groupEnd();
 
 		// First to win 5 rounds wins the game
-		(playerScore === 5 || computerScore === 5) ? isGameWon = true : isGameWon = false;
-
-		isGameWon && playerScore === 5 ? console.log("\nWe have a winner (and it's YOU)!\n ") : 
-			isGameWon && computerScore === 5 ? console.error("Better luck next time...") : 
-				isGameWon = false;
-
+		isGameWon = (playerScore === 5 || computerScore === 5) ? true : false;
 		currentRound++;
 	}
+
+	console.log((playerScore === 5) ? PLAYER_WON_GAME : PLAYER_LOST_GAME);
 }
 
 
@@ -88,7 +101,10 @@ let computerScore = 0;
 
 
 // Messages for possible results:
-const INCORRECT_STRING_ENTERED = "Sorry! We do not recognize the object you entered. Please enter either 'rock', 'paper', or 'scissors'.";
+const PROMPT_MESSAGE = "What's your weapon of choice?\n(Rock/Paper/Scissors)";
+const INCORRECT_STRING_ENTERED = "Sorry! You entered something wrong. Please enter either 'rock', 'paper', or 'scissors'.";
+const PLAYER_WON_GAME = "\nWe have a winner (and it's YOU)!\n ";
+const PLAYER_LOST_GAME = "Better luck next time...";
 const ROUND_DRAW = "It's an even fight - neither won.";
 const RVP_LOSE = "Tough luck, you lose - paper eats rock :(";
 const RVS_WIN = "Yay, you win - rock crushes scissors!";
