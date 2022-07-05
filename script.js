@@ -101,16 +101,16 @@ const SVP_WIN = "Yay, you win - scissors cut paper!";
 let buttons = document.getElementById('selection-buttons');
 
 buttons.addEventListener('click', (e) => {
-		let result = playRound(e.target.id, computerPlay());
-		displayResult(result);
-		updateScores();
-		
-		if (playerScore === 5 || computerScore === 5) {
-			buttons.replaceChildren();
-			setTimeout(() => {
-				document.getElementById('result').textContent = 
-					(playerScore === 5 ? PLAYER_WON_GAME : PLAYER_LOST_GAME);
-			}, 2000);
-		}
-	});
+	let result = playRound(e.target.id, computerPlay());
+	displayResult(result);
+	updateScores();
+	
+	if (playerScore === 5 || computerScore === 5) {
+		buttons.replaceChildren();
+		setTimeout(() => {
+			document.getElementById('result').textContent = 
+				(playerScore === 5 ? PLAYER_WON_GAME : PLAYER_LOST_GAME);
+		}, 2000);
+	}
+});
 
