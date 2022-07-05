@@ -68,30 +68,14 @@ function playRound (playerSelection, computerSelection) {
 }
 
 
-function game() {
-	let playerSelection;
-	let computerSelection;
-	let isGameWon = false;
-	let currentRound = 1;
+function displayResult(result) {
+	document.getElementById('result').textContent = result;
+}
 
-	// Setting the stage...
-	console.clear();
 
-	while (!isGameWon) {
-		playerSelection = prompt(PROMPT_MESSAGE).toLowerCase();
-		computerSelection = computerPlay();
-
-		console.group(`Round ${currentRound}`);
-		console.log(playRound(playerSelection, computerSelection));
-		console.log(`YOU ${playerScore} - ${computerScore} COM`);
-		console.groupEnd();
-
-		// First to win 5 rounds wins the game
-		isGameWon = (playerScore === 5 || computerScore === 5) ? true : false;
-		currentRound++;
-	}
-
-	console.log((playerScore === 5) ? PLAYER_WON_GAME : PLAYER_LOST_GAME);
+function updateScores() {
+	document.getElementById('player-score').textContent = playerScore;
+	document.getElementById('computer-score').textContent = computerScore;
 }
 
 
@@ -114,6 +98,19 @@ const SVR_LOSE = "Tough luck, you lose - rock crushes scissors :(";
 const SVP_WIN = "Yay, you win - scissors cut paper!";
 
 
-// Play a game:
-alert("Press (ctrl+shift+i) to open your console and start playing!");
-game();
+let buttons = document.getElementById('selection-buttons');
+
+buttons.addEventListener('click', (e) => {
+		let result = playRound(e.target.id, computerPlay());
+		displayResult(result);
+		updateScores();
+		
+		if (playerScore === 5 || computerScore === 5) {
+			buttons.replaceChildren();
+			setTimeout(() => {
+				document.getElementById('result').textContent = 
+					(playerScore === 5 ? PLAYER_WON_GAME : PLAYER_LOST_GAME);
+			}, 2000);
+		}
+	});
+
